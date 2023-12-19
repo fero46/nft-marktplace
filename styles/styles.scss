@@ -1,0 +1,654 @@
+$black: #161d27;
+$black-bis: hsl(215, 22%, 15%);
+$blue: #485fc7;
+$light-blue: hsl(229, 53%, 83%);
+$bg-1: hsl(207, 53%, 97%);
+$bg-2: hsl(207, 53%, 98%);
+$dark: rgb(70, 86, 109);
+$light-grey: rgba(181, 181, 181, 0.25);
+$radius: 12px;
+$navbar-breakpoint: 900px;
+$family-primary: "Karla";
+// has to be pixels to do calc for some reason?????
+$nh: 52px;
+
+@import "bulma//bulma.sass";
+@import "react-toastify/dist/ReactToastify.css";
+@import "react-placeholder/lib/reactPlaceholder.css";
+@import "react-loading-skeleton/dist/skeleton.css";
+@import "swiper/scss";
+@import "swiper/scss/pagination";
+@import "swiper/scss/navigation";
+
+@font-face {
+  font-family: "Brandon";
+  src: url("../public/fonts/BrandonGrotesque-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Karla";
+  src: url("../public/fonts/Karla-Regular.ttf") format("truetype");
+}
+
+html {
+  overflow: auto;
+  height: 100%;
+  background-color: $bg-1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Brandon" !important;
+}
+
+h1 {
+  line-height: 60px !important;
+}
+
+body {
+  background-color: $bg-1;
+  height: 100%;
+  padding-top: $nh;
+  overflow-x: hidden;
+}
+
+button {
+  overflow: hidden;
+  &:hover,
+  :focus {
+    outline: none;
+  }
+}
+
+.navbar {
+  height: $nh;
+
+  //for mozilla bug
+  svg {
+    max-height: $nh;
+  }
+
+  .new-active {
+    color: $cyan !important;
+    background-color: $black !important;
+
+    svg {
+      color: $cyan !important;
+    }
+
+    &::after {
+      background-color: $cyan;
+      bottom: 0;
+      content: "";
+      display: block;
+      height: 4px;
+      left: 0px;
+      position: absolute;
+      width: 100%;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+  }
+
+  .navbar-dropdown {
+    background-color: $black !important;
+    color: white !important;
+    border-top-color: $blue;
+
+    .navbar-item {
+      color: white !important;
+      font-size: 1em;
+      &:hover {
+        background-color: $black-bis !important;
+      }
+      //can't write this with comma????
+      &:focus {
+        background-color: $black-bis !important;
+      }
+    }
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.bg-1 {
+  background-color: $bg-1;
+}
+
+.invisible {
+  display: none;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.button.has-black-border {
+  border-color: $black;
+}
+
+.flex-gap {
+  gap: 0.5em;
+}
+
+.py-55 {
+  padding: {
+    top: 2.25em;
+    bottom: 2.25em;
+  }
+}
+
+.pr-7 {
+  padding-right: 8em;
+}
+
+.container {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.mobile-menu {
+  position: fixed;
+  height: calc(100vh - 52px);
+  background-color: $bg-1;
+  overflow-y: auto;
+  z-index: 20;
+  top: 52px;
+
+  &.right {
+    right: 0;
+  }
+
+  &.left {
+    left: 0;
+  }
+
+  &.passive {
+    width: 0;
+    transition: width 0.5s ease;
+
+    button {
+      visibility: hidden;
+    }
+  }
+
+  &.active {
+    width: 100%;
+    transition: width 0.5s ease;
+
+    button {
+      visibility: visible;
+    }
+  }
+
+  & > div {
+    height: 100%;
+  }
+
+  & > .card-content {
+    height: fit-content;
+    max-height: 240px;
+    overflow: auto;
+  }
+}
+
+.page-overlay {
+  position: fixed;
+  z-index: 100 !important;
+  background-color: rgba(23, 23, 23, 0.3);
+  top: $nh;
+  left: 0;
+  height: calc(100vh - 52px);
+  width: 100%;
+}
+
+.panel-wrapper {
+  &.show {
+    flex: 0 0 420px;
+    transition: flex-basis 0.5s ease-in-out;
+    -webkit-transition: flex-basis 0.5s ease-in-out;
+    -ms-transition: flex-basis 0.5s ease-in-out;
+  }
+
+  &.hide {
+    flex: 0 0 50px;
+    transition: width 0.5s ease-in-out;
+    -webkit-transition: width 0.5s ease-in-out;
+    -ms-transition: width 0.5s ease-in-out;
+  }
+}
+
+.panel {
+  width: 420px;
+  height: calc(100vh - 52px);
+  background-color: white;
+  overflow-y: auto;
+  z-index: 200 !important;
+  transition: width 0.5s ease-in-out;
+  -webkit-transition: width 0.5s ease-in-out;
+  -ms-transition: width 0.5s ease-in-out;
+
+  &.hide {
+    width: 50px;
+    transition: width 0.5s ease-in-out;
+    -webkit-transition: width 0.5s ease-in-out;
+    -ms-transition: width 0.5s ease-in-out;
+  }
+
+  &.none {
+    width: 0;
+    display: none;
+  }
+
+  &.left {
+    border-right-style: groove;
+    border-right-color: $light-grey;
+  }
+
+  &.right {
+    border-left-style: groove;
+    border-left-color: $light-grey;
+    right: 0;
+  }
+
+  &.fixed {
+    position: fixed;
+    top: $nh;
+  }
+}
+
+.grid-wrapper {
+  height: calc(100vh - 52px); //doesn't work with variable????????????
+  overflow-y: auto;
+}
+
+.asset-card {
+  .card-header p {
+    display: inline-block;
+    width: fit-content;
+    line-height: 40px;
+    padding-left: 0.25em;
+  }
+}
+
+.not-collapsible {
+  height: 15em;
+  overflow-y: auto;
+}
+
+.property-box {
+  border-style: solid;
+  border-color: $blue;
+  border-width: 1px;
+  padding: 0.5em 0.25em 0.5em 0.25em;
+  text-align: center;
+  background-color: $light-blue;
+
+  .ptag {
+    text-transform: uppercase;
+    font-size: 12px;
+    color: $blue;
+  }
+
+  .value {
+    font-size: 20px;
+  }
+
+  .rarity {
+    color: gray;
+    font-size: 12px;
+  }
+}
+
+.collection-box {
+  border-style: solid;
+  border-width: 1px;
+  height: 8em;
+
+  b {
+    // max-width: 100px;
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &.active {
+    border-color: $blue;
+  }
+
+  &.passive {
+    border-color: $light-grey;
+  }
+}
+
+.new-ghost {
+  color: $dark;
+  background-color: transparent;
+  border: none;
+  :hover {
+    color: $black;
+  }
+}
+
+.collapsible-header {
+  border-bottom-style: groove !important;
+  border-bottom-width: 1px;
+  border-bottom-color: $light-grey !important;
+  background-color: $bg-2 !important;
+}
+
+.fixed-button {
+  position: fixed;
+  display: block;
+  bottom: 2em;
+  left: 25%;
+  width: 50%;
+}
+
+.nft-upload {
+  border-style: dashed;
+  border-color: rgba(70, 86, 109, 0.25);
+  border-radius: 0.25rem;
+  border-width: 5px;
+  padding-right: 1em;
+  width: 16rem;
+  height: 12rem;
+  position: relative;
+
+  .inner {
+    position: absolute;
+    top: 0.5em;
+    bottom: 0.5em;
+    left: 0.5em;
+    right: 0.5em;
+    // margin: 0.5em 0.5em 0.5em 0.5em;
+    height: auto;
+    border-radius: inherit;
+  }
+
+  svg {
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    width: 4rem !important;
+    height: 4rem !important;
+    transform: translate(-2rem, -2rem);
+    color: rgba(70, 86, 109, 0.25);
+  }
+
+  span {
+    position: absolute;
+    display: none;
+    bottom: 0.25em;
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    color: rgba(70, 86, 109, 0.25);
+  }
+
+  &:hover {
+    border-color: rgba(70, 86, 109, 0.5);
+    cursor: pointer;
+    .inner {
+      background-color: rgba(70, 86, 109, 0.25);
+    }
+    img {
+      opacity: 0.75;
+    }
+  }
+  &.dragged {
+    border-color: rgba(70, 86, 109, 0.5);
+    .inner {
+      background-color: rgba(70, 86, 109, 0.25);
+    }
+    span {
+      display: block;
+    }
+  }
+  * {
+    pointer-events: none;
+  }
+}
+
+.banner {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  .image {
+    position: absolute;
+    top: 0;
+    height: inherit;
+    width: 100% !important;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    background-color: none;
+    width: 100% !important;
+    height: inherit;
+    z-index: 10;
+    cursor: pointer;
+
+    &.active {
+      background-color: rgba(23, 23, 23, 0.3);
+    }
+  }
+
+  .addons {
+    position: absolute;
+    right: 1em;
+    bottom: -3em;
+    z-index: 10;
+  }
+}
+
+.pfp {
+  // - half of image and border
+  position: relative;
+  margin-top: -68px;
+
+  .wrapper {
+    align-self: center;
+    z-index: 20;
+  }
+  img {
+    border-style: solid !important;
+    border-color: $bg-1 !important;
+    border-width: 8px !important;
+    background-color: $light-blue;
+    z-index: 25;
+  }
+
+  .overlay {
+    position: absolute;
+    background-color: none;
+    width: 128px !important;
+    height: 128px !important;
+    z-index: 30;
+    border-radius: 100%;
+    border-style: solid;
+    border-color: $bg-1;
+    border-width: 8px;
+    cursor: pointer;
+
+    &.active {
+      background-color: rgba(23, 23, 23, 0.3);
+    }
+  }
+}
+
+.dropdown-menu.wallet {
+  min-width: 6rem !important;
+  right: -2rem !important;
+
+  .dropdown-content {
+    background-color: $black;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+}
+
+.is-fit-content {
+  width: fit-content;
+}
+
+.is-top-radiusless {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+footer.is-black {
+  background-color: $black;
+}
+
+.image-skeleton {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.half-table {
+  td {
+    width: 50%;
+  }
+}
+
+.image-overlay {
+  padding: 5em !important;
+  margin: 5em !important;
+
+  image {
+    object-fit: contain;
+  }
+}
+
+.collapsible-body {
+  padding: 0 !important;
+
+  &.active {
+    max-height: 20em;
+    opacity: 1;
+    transition: opacity 0.5s, max-height 0.5s ease-in-out;
+    -webkit-transition: opacity 0.5s, max-height 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s, max-height 0.5s ease-in-out;
+    overflow-y: auto;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+  }
+
+  &.passive {
+    max-height: 0;
+    opacity: 0;
+    transition: opacity 0.5s, max-height 0.5s ease-in-out;
+    -webkit-transition: opacity 0.5s, max-height 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s, max-height 0.5s ease-in-out;
+    overflow: hidden;
+  }
+}
+
+.flip {
+  transition: rotate 0.5s ease-in-out;
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+  -ms-transition: -ms-transform 0.5s ease-in-out;
+  &.active {
+    transform: rotate(180deg);
+    transition: transform 0.5s ease-in-out;
+    -webkit-transition: -webkit-transform 0.5s ease-in-out;
+    -ms-transition: -ms-transform 0.5s ease-in-out;
+  }
+}
+
+.collection-card {
+  height: 360px;
+  .wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    //inner image should end at the middle
+    //height + 48/2 = 360/2
+    //so height is 156
+    height: 156px;
+    margin-bottom: 2em;
+    .inner {
+      align-self: flex-end;
+      z-index: 5;
+      width: 48px;
+      height: 48px;
+      border-radius: 4px;
+      border-style: solid;
+      border-color: white;
+      border-radius: 100%;
+      //also consider radius
+      //48 + 4 / 2
+      transform: translateY(26px);
+    }
+  }
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.button-wrapper {
+  border-style: solid;
+  &.active {
+    border-color: $blue;
+  }
+
+  &.passive {
+    border-color: $light-grey;
+  }
+}
+
+.create-collection {
+  height: 360px;
+  border-style: dashed;
+  border-color: rgba(70, 86, 109, 0.25);
+  border-radius: 0.25rem;
+  border-width: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    color: rgba(70, 86, 109, 0.5);
+  }
+
+  &:hover {
+    border-color: rgba(70, 86, 109, 0.5);
+    svg {
+      color: rgba(70, 86, 109, 0.75);
+    }
+  }
+}
